@@ -1,0 +1,8 @@
+fastapi # API framework
+uvicorn # ASGI database
+sqlalchemy # ORM for database
+pymysql # MySQL driver
+python-multipart # from data support
+pydantic[email] # data validation
+cryptography
+
