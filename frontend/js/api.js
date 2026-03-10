@@ -2,6 +2,7 @@ const BASE_URL = window.location.origin;
 
 async function getData(url){
     const res = await fetch(BASE_URL + url);
+    if(!res.ok) throw new Error("API error");
     return res.json();
 }
 
