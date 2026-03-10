@@ -32,7 +32,7 @@ function showUserForm(action) {
 async function createUser() {
     const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
-    const res = await postData("/users/", { name, email });
+    const res = await postData("/users", { name, email });
     if (res.ok) {
         alert("User created");
         showAllUsers();
@@ -50,7 +50,7 @@ async function getUser() {
 }
 
 async function showAllUsers() {
-    const users = await getData("/users/");
+    const users = await getData("/users");
     showUserTable(users, "All Users");
 }
 

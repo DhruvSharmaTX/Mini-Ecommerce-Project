@@ -5,9 +5,9 @@ function showHome(){
 }
 
 async function loadDashboard(){
-    const users = await getData("/users/");
-    const products = await getData("/products/");
-    const orders = await getData("/orders/");
+    const users = await getData("/users");
+    const products = await getData("/products");
+    const orders = await getData("/orders");
     document.getElementById("totalUsers").innerText = users.length;
     document.getElementById("totalProducts").innerText = products.length;
     document.getElementById("totalOrders").innerText = orders.length;
