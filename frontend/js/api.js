@@ -1,4 +1,4 @@
-const BASE_URL = window.location.origin;
+const BASE_URL = "https://mini-ecommerce-project-1.onrender.com";
 
 async function getData(url){
     const res = await fetch(BASE_URL + url);
