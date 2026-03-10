@@ -1,61 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Mini Ecommerce Dashboard</title>
-<link rel="stylesheet" href="css/styles.css">
+    <title>Mini Ecommerce</title>
+    <link rel="stylesheet" href="/frontend/css/styles.css">
 </head>
-
 <body>
-
-<header class="navbar">
-
-<div class="logo">Mini Ecommerce Website</div>
-
-<nav>
-<button onclick="showHome()">Home</button>
-<button onclick="loadUsers()">Users</button>
-<button onclick="loadProducts()">Products</button>
-<button onclick="loadOrders()">Orders</button>
-</nav>
-
-</header>
-
-<main class="content">
-
-<div id="homeView">
-
-<h1>Dashboard</h1>
-
-<div class="card-grid">
-
-<div class="card" onclick="loadUsers()">
-<h3>Users</h3>
-<p>Manage customers</p>
-</div>
-
-<div class="card" onclick="loadProducts()">
-<h3>Products</h3>
-<p>View and create products</p>
-</div>
-
-<div class="card" onclick="loadOrders()">
-<h3>Orders</h3>
-<p>Track and update orders</p>
-</div>
-
-</div>
-
-</div>
-
-<div id="app"></div>
-
-</main>
-
-<script src="js/main.js"></script>
-<script src="js/users.js"></script>
-<script src="js/products.js"></script>
-<script src="js/orders.js"></script>
-
+    <div class="navbar">
+        <div class="logo">Mini Ecommerce</div>
+        <nav>
+            <button onclick="showHome()">Home</button>
+            <button onclick="loadUsers()">Users</button>
+            <button onclick="loadProducts()">Products</button>
+            <button onclick="loadOrders()">Orders</button>
+        </nav>
+    </div>
+    <div class="content">
+        <div id="homeView">
+            <h1>Dashboard</h1>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Total Users</h3>
+                    <p id="totalUsers">0</p>
+                </div>
+                <div class="card">
+                    <h3>Total Products</h3>
+                    <p id="totalProducts">0</p>
+                </div>
+                <div class="card">
+                    <h3>Total Orders</h3>
+                    <p id="totalOrders">0</p>
+                </div>
+                <div class="card">
+                    <h3>Total Revenue</h3>
+                    <p id="totalRevenue">0</p>
+                </div>
+            </div>
+        </div>
+        <div id="app"></div>
+    </div>
+    <script src="/frontend/js/api.js"></script>
+    <script src="/frontend/js/ui.js"></script>
+    <script src="/frontend/js/users.js"></script>
+    <script src="/frontend/js/products.js"></script>
+    <script src="/frontend/js/orders.js"></script>
+    <script src="/frontend/js/main.js"></script>
 </body>
 </html>

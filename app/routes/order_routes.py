@@ -14,8 +14,9 @@ def get_all_orders(db: Session = Depends(get_db)):
 def get_order(order_id: str, db: Session = Depends(get_db)):
     return order_service.get_order_by_id(db, order_id)
 @router.put("/orders/{order_id}/status")
-def update_status(order_id: str, status: str, db: Session = Depends(get_db)):
+def update_status(order_id: str, payload: dict, db: Session = Depends(get_db)):
+    status = payload.get("status")
     return order_service.update_order_status(db, order_id, status)
 @router.put("/orders/{order_id}/cancel")
-def cancel_order(order_id: str, db: Session = Depends(get_db)):
+def cancel_order_route(order_id: str, db: Session = Depends(get_db)):
     return order_service.cancel_order(db, order_id)

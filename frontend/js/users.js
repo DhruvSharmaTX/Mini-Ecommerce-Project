@@ -1,174 +1,61 @@
 function loadUsers() {
-
-    document.getElementById("homeView").style.display = "none";
-
-    let html = `
-
-<h2>Users</h2>
-
-<div class="section">
-
-<button onclick="showCreateUser()">Create User</button>
-<button onclick="showGetUser()">Get User</button>
-<button onclick="showAllUsers()">Get All Users</button>
-
-</div>
-
-<div id="userContent"></div>
-
-`;
-
-    document.getElementById("app").innerHTML = html;
+    renderPage(
+        "Users",
+        `<button onclick="showUserForm('create')">Create User</button>
+        <button onclick="showAllUsers()">Get All Users</button>
+        <button onclick="showUserForm('get')">Get User</button>`,
+        "userContent"
+    );
 }
 
-
-function showCreateUser() {
-
-    let html = `
-
-<div class="section">
-
-<h3>Create User</h3>
-
-<input id="name" placeholder="Name">
-<input id="email" placeholder="Email">
-
-<button onclick="createUser()">Create</button>
-
-</div>
-`;
-
-    document.getElementById("userContent").innerHTML = html;
-}
-
-
-async function createUser() {
-
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-
-    const response = await fetch("/users/", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            name: name,
-            email: email
-        })
-    });
-
-    if (response.ok) {
-
-        alert("User created successfully");
-
-        document.getElementById("name").value = "";
-        document.getElementById("email").value = "";
-
-        showAllUsers();
-
-    } else {
-
-        alert("Error creating user");
-
+function showUserForm(action) {
+    if (action === "create") {
+        document.getElementById("userContent").innerHTML = renderForm(
+            "Create User",
+            [
+                { id: "name", placeholder: "Name" },
+                { id: "email", placeholder: "Email" }
+            ],
+            "Create",
+            "createUser()"
+        );
+    } else if (action === "get") {
+        document.getElementById("userContent").innerHTML = renderSearch(
+            "Get User",
+            "userid",
+            "User ID",
+            "getUser()"
+        );
     }
 }
 
-
-function showGetUser() {
-
-    let html = `
-
-<div class="section">
-
-<h3>Get User</h3>
-
-<input id="userid" placeholder="User ID">
-
-<button onclick="getUser()">Search</button>
-
-</div>
-`;
-
-    document.getElementById("userContent").innerHTML = html;
+async function createUser() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const res = await postData("/users/", { name, email });
+    if (res.ok) {
+        alert("User created");
+        showAllUsers();
+    }
 }
-
 
 async function getUser() {
-
     const id = document.getElementById("userid").value;
-
-    const response = await fetch(`/users/${id}`);
-    const user = await response.json();
-
-    let html = `
-
-<div class="section">
-
-<h3>User</h3>
-
-<table border="orderTable">
-
-<tr>
-<th>ID</th>
-<th>Name</th>
-<th>Email</th>
-</tr>
-
-<tr>
-<td>${user.id}</td>
-<td>${user.name}</td>
-<td>${user.email}</td>
-</tr>
-
-</table>
-
-</div>
-`;
-
-    document.getElementById("userContent").innerHTML = html;
+    try {
+        const user = await getData("/users/" + id);
+        showUserTable([user], "User Details");
+    } catch {
+        document.getElementById("userContent").innerHTML = "<p>User not found</p>";
+    }
 }
 
-
 async function showAllUsers() {
+    const users = await getData("/users/");
+    showUserTable(users, "All Users");
+}
 
-    const response = await fetch("/users/");
-    const users = await response.json();
-
-    let rows = "";
-
-    users.forEach(user => {
-
-        rows += `
-<tr>
-<td>${user.id}</td>
-<td>${user.name}</td>
-<td>${user.email}</td>
-</tr>
-`;
-
-    });
-
-    let html = `
-
-<div class="section">
-
-<h3>All Users</h3>
-
-<table>
-
-<tr>
-<th>ID</th>
-<th>Name</th>
-<th>Email</th>
-</tr>
-
-${rows}
-
-</table>
-
-</div>
-`;
-
-    document.getElementById("userContent").innerHTML = html;
+function showUserTable(users, title) {
+    const rows = users.map(u => [u.id, u.name, u.email]);
+    const table = renderTable(["ID", "Name", "Email"], rows);
+    document.getElementById("userContent").innerHTML = renderSection(title, table);
 }

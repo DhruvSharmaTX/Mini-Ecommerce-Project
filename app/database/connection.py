@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 import time
 
+# DATABASE_URL = "mysql+pymysql://root:Password@localhost:3306/ecommerce"
 DATABASE_URL = "mysql+pymysql://root:Password@mysql:3306/ecommerce"
 
 engine = None
