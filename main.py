@@ -18,7 +18,7 @@ Base.metadata.create_all(bind=engine)
 # Frontend URL for CORS
 frontend_url = os.getenv(
     "FRONTEND_URL",
-    "https://mini-ecommerce-project-m23b.onrender.com"
+    "https://mini-ecommerce-project-1.onrender.com"
 )
 
 app.add_middleware(
