@@ -18,7 +18,7 @@ Base.metadata.create_all(bind=engine)
 # Frontend URL for CORS
 frontend_url = os.getenv(
     "FRONTEND_URL",
-    "https://mini-ecommerce-project-1.onrender.com"
+    "https://mini-ecommerce-project-m23b.onrender.com"
 )
 
 app.add_middleware(
@@ -30,9 +30,9 @@ app.add_middleware(
 )
 
 # Include routers with clean prefixes
-app.include_router(user_routes.router, prefix="/users", tags=["Users"])
-app.include_router(product_routes.router, prefix="/products", tags=["Products"])
-app.include_router(order_routes.router, prefix="/orders", tags=["Orders"])
+app.include_router(user_routes.router)
+app.include_router(product_routes.router)
+app.include_router(order_routes.router)
 
 # Serve frontend
 app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")

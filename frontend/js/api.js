@@ -1,4 +1,4 @@
-const BASE_URL = "https://mini-ecommerce-project-1.onrender.com";
+const BASE_URL = "https://mini-ecommerce-project-m23b.onrender.com";
 
 async function getData(url) {
     try {

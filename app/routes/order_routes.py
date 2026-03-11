@@ -4,7 +4,7 @@ from app.database.connection import get_db
 from app.schemas import order_schema
 from app.services import order_service
 
-router = APIRouter(tags=["Orders"])
+router = APIRouter(prefix="/orders", tags=["Orders"])
 
 @router.post("/")  # POST /orders
 def create_order(order: order_schema.OrderCreate, db: Session = Depends(get_db)):

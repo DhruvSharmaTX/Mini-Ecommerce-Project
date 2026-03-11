@@ -4,7 +4,7 @@ from app.database.connection import get_db
 from app.schemas.product_schema import ProductCreate, ProductUpdate
 from app.services import product_service
 
-router = APIRouter(tags=["Products"])
+router = APIRouter(prefix="/products", tags=["Products"])
 
 @router.post("/")  # POST /products
 def create_product(product: ProductCreate, db: Session = Depends(get_db)):

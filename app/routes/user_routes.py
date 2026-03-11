@@ -4,7 +4,7 @@ from app.database.connection import get_db
 from app.schemas import user_schema
 from app.services import user_service
 
-router = APIRouter(tags=["Users"])
+router = APIRouter(prefix="/users", tags=["Users"])
 
 @router.post("/")  # POST /users
 def create_user(user: user_schema.UserCreate, db: Session = Depends(get_db)):
