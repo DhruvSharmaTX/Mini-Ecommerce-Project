@@ -4,7 +4,6 @@ from fastapi.staticfiles import StaticFiles
 import os
 
 from app.database.connection import Base, engine
-from app.models import user_model, product_model, order_model, order_item_model
 from app.routes import user_routes, product_routes, order_routes
 
 app = FastAPI(
@@ -30,7 +29,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers
+# Include routers with proper prefixes
 app.include_router(user_routes.router, prefix="/users", tags=["Users"])
 app.include_router(product_routes.router, prefix="/products", tags=["Products"])
 app.include_router(order_routes.router, prefix="/orders", tags=["Orders"])
