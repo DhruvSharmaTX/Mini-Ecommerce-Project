@@ -1,6 +1,5 @@
-// Use your backend Render URL here
-// api.js
-const BASE_URL = "https://mini-ecommerce-project-m23b.onrender.com"; // Correct backend
+const BASE_URL = "https://mini-ecommerce-project-1.onrender.com";
+
 async function getData(url) {
     try {
         const res = await fetch(BASE_URL + url);
