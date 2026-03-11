@@ -30,16 +30,16 @@
 # #     finally:
 # #         db.close()
 
+
 # from sqlalchemy import create_engine
 # from sqlalchemy.orm import sessionmaker, declarative_base
-# import os
 
-# DATABASE_URL = os.getenv(
-#     "DATABASE_URL",
-#     "mysql+pymysql://root:Password@localhost:3306/ecommerce"
+# DATABASE_URL = "sqlite:///./ecommerce.db"
+
+# engine = create_engine(
+#     DATABASE_URL,
+#     connect_args={"check_same_thread": False}
 # )
-
-# engine = create_engine(DATABASE_URL, echo=False)
 
 # SessionLocal = sessionmaker(
 #     autocommit=False,
@@ -56,15 +56,14 @@
 #     finally:
 #         db.close()
 
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+import os
 
-DATABASE_URL = "sqlite:///./ecommerce.db"
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-engine = create_engine(
-    DATABASE_URL,
-    connect_args={"check_same_thread": False}
-)
+engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(
     autocommit=False,

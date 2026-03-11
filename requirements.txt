@@ -5,4 +5,4 @@ pymysql # MySQL driver
 python-multipart # from data support
 pydantic[email] # data validation
 cryptography
-
+psycopg2-binary
