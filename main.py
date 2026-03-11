@@ -26,9 +26,9 @@ app.add_middleware(
 )
 
 # --- Include routers ---
-app.include_router(user_routes.router, prefix="/users", tags=["Users"])
-app.include_router(product_routes.router, prefix="/products", tags=["Products"])
-app.include_router(order_routes.router, prefix="/orders", tags=["Orders"])
+app.include_router(user_routes.router, tags=["Users"])
+app.include_router(product_routes.router,  tags=["Products"])
+app.include_router(order_routes.router, tags=["Orders"])
 
 # --- Serve frontend ---
 app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
