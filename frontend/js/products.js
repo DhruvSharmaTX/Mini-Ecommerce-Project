@@ -35,10 +35,12 @@ async function createProduct() {
     const name = document.getElementById("product_name").value;
     const price = parseFloat(document.getElementById("price").value);
     const stock = parseInt(document.getElementById("stock").value);
-    const res = await postData("/products/", { name, price, stock_quantity: stock });
+
+    const res = await postData("/products", { name, price, stock_quantity: stock });
+
     if (res.ok) {
         alert("Product created");
-        showProductsTable(); 
+        showProductsTable();
     }
 }
 
@@ -65,7 +67,7 @@ async function updateProductInline(id) {
 }
 
 async function showProductsTable(editable = false, data = null, title = null) {
-    const products = data || await getData("/products/");
+    const products = data || await getData("/products");
     const rows = products.map(p => {
         if (editable) {
             return [

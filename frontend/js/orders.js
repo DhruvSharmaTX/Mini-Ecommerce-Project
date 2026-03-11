@@ -43,15 +43,26 @@ function addItem() {
 
 async function createOrder() {
     const user_id = document.getElementById("user_id").value;
+
     const items = Array.from(document.querySelectorAll(".product_id"))
-        .map((el, i) => ({ product_id: el.value, quantity: parseInt(document.querySelectorAll(".quantity")[i].value) }));
-    const res = await postData("/orders/", { user_id, items });
-    if (res.ok) { alert("Order created"); showOrdersTable(); } 
-    else { alert("Error creating order"); }
+        .map((el, i) => ({
+            product_id: el.value,
+            quantity: parseInt(document.querySelectorAll(".quantity")[i].value)
+        }));
+
+    const res = await postData("/orders", { user_id, items });
+
+    if (res.ok) {
+        alert("Order created");
+        showOrdersTable();
+    } else {
+        alert("Error creating order");
+    }
 }
 
+
 async function showOrdersTable(data = null) {
-    const orders = data || await getData("/orders/");
+    const orders = data || await getData("/orders");
     const rows = orders.map(o => [
         o.id, o.user_id, o.total_amount,
         `<span class="status-${o.status}">${o.status}</span>`,
@@ -63,7 +74,7 @@ async function showOrdersTable(data = null) {
 }
 
 async function showOrdersStatusTable() {
-    const orders = await getData("/orders/");
+    const orders = await getData("/orders");
     const rows = orders.map(o => {
         const status = o.status || 'PENDING'; // default
         return [
