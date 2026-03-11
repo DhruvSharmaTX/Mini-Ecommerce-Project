@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+import os
 
 from app.database.connection import Base, engine
 from app.models import user_model, product_model, order_model, order_item_model
@@ -12,20 +13,32 @@ app = FastAPI(
     version="1.0"
 )
 
+# Create tables in PostgreSQL if they don't exist
 Base.metadata.create_all(bind=engine)
 
-origins = ["*"]   # allow all for now
+# Frontend URL for CORS
+frontend_url = os.getenv(
+    "FRONTEND_URL",
+    "https://mini-ecommerce-project-m23b.onrender.com"
+)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=[frontend_url, "http://localhost:5500"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-app.include_router(user_routes.router)
-app.include_router(product_routes.router)
-app.include_router(order_routes.router)
-# serve frontend
+# Include routers
+app.include_router(user_routes.router, prefix="/users", tags=["Users"])
+app.include_router(product_routes.router, prefix="/products", tags=["Products"])
+app.include_router(order_routes.router, prefix="/orders", tags=["Orders"])
+
+# Serve frontend
 app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
+
+# Health check for Render
+@app.get("/healthz")
+def health_check():
+    return {"status": "ok"}
