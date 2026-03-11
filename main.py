@@ -15,22 +15,17 @@ app = FastAPI(
 # Create tables if not exist
 Base.metadata.create_all(bind=engine)
 
-# --- CORS settings ---
-# Frontend URL
-FRONTEND_URL = os.getenv(
-    "FRONTEND_URL",
-    "https://mini-ecommerce-project-m23b.onrender.com"
-)
-
+# --- CORS Middleware ---
+# For testing, allow all origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_URL, "http://localhost:5500"],
+    allow_origins=["*"],  # <- allows any frontend to access your backend
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# --- API routes ---
+# --- Include routers ---
 app.include_router(user_routes.router, prefix="/users", tags=["Users"])
 app.include_router(product_routes.router, prefix="/products", tags=["Products"])
 app.include_router(order_routes.router, prefix="/orders", tags=["Orders"])
@@ -38,7 +33,7 @@ app.include_router(order_routes.router, prefix="/orders", tags=["Orders"])
 # --- Serve frontend ---
 app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
 
-# --- Health check for Render ---
+# --- Health check ---
 @app.get("/healthz")
 def health_check():
     return {"status": "ok"}
