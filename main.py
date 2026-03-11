@@ -24,9 +24,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# serve frontend
-app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
-
 app.include_router(user_routes.router)
 app.include_router(product_routes.router)
 app.include_router(order_routes.router)
+# serve frontend
+app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
