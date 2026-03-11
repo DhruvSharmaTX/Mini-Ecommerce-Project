@@ -19,7 +19,7 @@ Base.metadata.create_all(bind=engine)
 # For testing, allow all origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # <- allows any frontend to access your backend
+    allow_origins=["https://mini-ecommerce-project-m23b.onrender.com"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
